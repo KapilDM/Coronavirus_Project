@@ -5,8 +5,10 @@ import pandas as pd
 
 root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(root_path)
-sys.path = list(set(sys.path)) 
+
+
 from src.utils.folders_tb import open_json
+from src.utils.apis_tb import n_d_averages_json
 
 app = Flask(__name__)
 
@@ -29,16 +31,7 @@ def token_id():
     S = "B227766764"
     contrasenia = request.args["password"] 
     if (contrasenia == S):
-        data = pd.read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
-        data_sc = data[(data["location"] == "India") | (data["location"] == "Peru") | (data["location"] == "United States") | (data["location"] == "France") | (data["location"] == "Spain")]
-        
-        data_sc["date"] = data_sc["date"].astype('datetime64[ns]')
-        
-        df_api = data_sc.groupby(["date"]).mean()["new_deaths"].to_frame()
-        df_api.columns = ["n_d_averages"]
-        
-        result = df_api.to_json(orient="columns")
-        json_b_group = json.loads(result)
+        json_b_group = n_d_averages_json()
         return json_b_group #open_json(path_json) 
     else:
         return "CONTRASEÑA INCORRECTA"

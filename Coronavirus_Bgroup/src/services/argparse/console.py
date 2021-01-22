@@ -1,6 +1,15 @@
 import argparse
 import pandas as pd
 import json
+import os
+import sys
+
+root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(root_path)
+
+
+from src.utils.folders_tb import open_json
+from src.utils.apis_tb import n_d_averages_json
 
 class Comando:
 
@@ -10,20 +19,10 @@ class Comando:
         self.args = vars(parser.parse_args())
 
     def json_df(self):
-        data = pd.read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
-        data_sc = data[(data["location"] == "India") | (data["location"] == "Peru") | (data["location"] == "United States") | (data["location"] == "France") | (data["location"] == "Spain")]
-        
-        data_sc["date"] = data_sc["date"].astype('datetime64[ns]')
-        
-        df_api = data_sc.groupby(["date"]).mean()["new_deaths"].to_frame()
-        df_api.columns = ["n_d_averages"]
-        
-        result = df_api.to_json(orient="columns")
-        parsed = json.loads(result)
         
         base = self.args["j"]
 
-        return print("\n######################\nThis is the json of B Group\n######################\n\n", parsed) if base == 18 else print("\n######################\nSorry, this is not the correct answer\n######################\n\n")
+        return print("\n######################\nThis is the json of B Group\n######################\n\n", n_d_averages_json()) if base == 18 else print("\n######################\nSorry, this is not the correct answer\n######################\n\n")
 
 comando_18 = Comando()
 comando_18.json_df()
