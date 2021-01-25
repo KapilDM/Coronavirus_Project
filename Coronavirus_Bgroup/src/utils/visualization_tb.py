@@ -57,6 +57,9 @@ def prcnt_plt(df):
     plt.legend(df.columns)
 
 def plot_def(df, row, countr_list, ylab=None, title=None):
+    '''
+        General plot function for all columns considered and lines for every country
+    '''
     axes_list = get_row_countries(df=df, row=row, countr_list=countr_list)
     plot_row_countries(axes_list= axes_list)
     if ylab:
@@ -68,7 +71,9 @@ def plot_def(df, row, countr_list, ylab=None, title=None):
     plt.legend()
 
 def country_alarm_state_func(df,country):
-    #@KapilDM
+    '''
+        Plots graphs for every column for every country considered with state alarm dates in vertical lines
+    '''
     y_total_cases = df[(df["location"] == country)].total_cases
     y_total_cases_per_million = df[(df["location"] == country)].total_cases_per_million
     y_new_cases_smoothed = df[(df["location"] == country)].new_cases_smoothed
@@ -88,12 +93,11 @@ def country_alarm_state_func(df,country):
     "New deaths smoothed per million","Total deaths","Total deaths per million","Stringency index",
     "Life expectancy","New deaths"]
 
-    #sns.set_style("whitegrid")
     x_plot = df[(df["location"] == country)].date
     for pos,val in enumerate(lista):
         sns.set()
         plt.figure(figsize=(cm_to_inch(30),cm_to_inch(15)))
-        plt.title(str(country) + " - " + lista2[pos], fontdict={"fontsize":15, "fontweight":"bold"} ) #HE cambiado esto 
+        plt.title(str(country) + " - " + lista2[pos], fontdict={"fontsize":15, "fontweight":"bold"} )
         plt.xlabel("Date", weight="bold")
         plt.ylabel(lista2[pos], weight="bold")
         plt.xticks(rotation="90")
@@ -133,14 +137,20 @@ def country_alarm_state_func(df,country):
         plt.legend()
         plt.show()
 
-def prcnt_df(df, column):
+def percent_df(df, column):
+    '''
+        Returns dataframe with rows as percentage o the days totals
+    '''
     cases_percnt = pd.DataFrame()
     for col in df.columns[:-1]:
         cases_percnt[col] = (df[col]/df[column])*100
     return cases_percnt
 
-def prcnt_plt(df):
-    plt.figure(figsize=(cm_to_inch(30), cm_to_inch(15)))
+def percent_plt(df):
+    '''
+        Plots line plot for each column of df
+    '''
+    plt.figure(figsize=(cm_to_inch(30),cm_to_inch(15)))
     colour = ['r', 'g', 'b', 'y', '#6B737E']
 
     for i,col in enumerate(df):
@@ -150,9 +160,22 @@ def prcnt_plt(df):
 
     plt.legend(df.columns)
 
-####### Labelling and saving functions
+def life_expct_plot(df):
+    '''
+        Plots barplot for life expectancy
+    '''
+    sns.set()
+    plt.figure(figsize=(cm_to_inch(30),cm_to_inch(15)))
+    colour = ['y', 'r', '#6B737E', 'b', 'g']
+    for i in range(len(df)):
+        plt.barh(df.location.iloc[i], df.life_expectancy.iloc[i], color=colour[i])
+    label_fig(xlab='Life expectancy (age)', title='Life expectancy')
+    plt.show()
 
 def label_fig(title=None, xlab=None, ylab=None, tit_size=15):
+    '''
+        Puts title, x-label and y-label on plots
+    '''
     if title:
         plt.title(title, fontsize=tit_size)
     if xlab:
@@ -161,5 +184,8 @@ def label_fig(title=None, xlab=None, ylab=None, tit_size=15):
         plt.ylabel(ylab, weight="bold")
 
 def save_resources(name):
+    '''
+        Saves plots on reports folder
+    '''
     root_project = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     plt.savefig(root_project + f'//reports//{name}.png', dpi=300, bbox_inches='tight')
