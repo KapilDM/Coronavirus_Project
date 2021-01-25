@@ -97,6 +97,9 @@ def country_alarm_state_func(df,country):
         plt.ylabel(lista2[pos], weight="bold")
         plt.xticks(rotation="90")
 
+        if lista2[pos] == "Stringency index":
+            plt.ylim([0,100])
+
         if country == "France":
             plt.plot(x_plot.values, val, color='r', label = lista2[pos],linewidth= 2)
             plt.axvline(pd.to_datetime('2020-03-23'), color="#9433FF", linestyle='--', lw=2, label='FIRST: Start /End alarm state')
@@ -128,6 +131,23 @@ def country_alarm_state_func(df,country):
             
         plt.legend()
         plt.show()
+
+def prcnt_df(df, column):
+    cases_percnt = pd.DataFrame()
+    for col in df.columns[:-1]:
+        cases_percnt[col] = (df[col]/df[column])*100
+    return cases_percnt
+
+def prcnt_plt(df):
+    plt.figure(figsize=(cm_to_inch(30), cm_to_inch(15)))
+    colour = ['r', 'g', 'b', 'y', '#6B737E']
+
+    for i,col in enumerate(df):
+        x_axes = df[col].index
+        y_axes = df[col].values
+        plt.plot(x_axes, y_axes, linewidth= 3, color=colour[i])
+
+    plt.legend(df.columns)
 
 ####### Labelling and saving functions
 
