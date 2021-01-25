@@ -64,6 +64,7 @@ def plot_def(df, row, countr_list, ylab=None, title=None):
     else:
         ylab = row
     label_fig(title=title, xlab='Date', ylab=ylab)
+    plt.xticks(rotation="90")
     plt.legend()
 
 def country_alarm_state_func(df,country):
@@ -106,28 +107,28 @@ def country_alarm_state_func(df,country):
             plt.axvline(pd.to_datetime('2020-07-10'), color="#9433FF", linestyle='--', lw=2)
             plt.axvline(pd.to_datetime('2020-10-17'), color="#F633FF", linestyle='--', lw=2, label='SECOND: Start alarm state')
             plt.axvspan(pd.to_datetime('2020-03-23'), pd.to_datetime('2020-07-10'), alpha=0.04, color='#9433FF')
-            plt.savefig(root_path + "\\resources\\France\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
+            plt.savefig(root_path + "\\reports\\France\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
         elif country == "Spain":
             plt.plot(x_plot.values, val, color='y', label = lista2[pos],linewidth= 2)
             plt.axvline(pd.to_datetime('2020-03-14'), color="#9433FF", linestyle='--', lw=2, label='FIRST: Start /End alarm state')
             plt.axvline(pd.to_datetime('2020-06-21'), color="#9433FF", linestyle='--', lw=2)
             plt.axvline(pd.to_datetime('2020-10-25'), color="#F633FF", linestyle='--', lw=2, label='SECOND: Start alarm State')
             plt.axvspan(pd.to_datetime('2020-03-14'), pd.to_datetime('2020-06-21'), alpha=0.04, color='#9433FF')
-            plt.savefig(root_path + "\\resources\\Spain\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
+            plt.savefig(root_path + "\\reports\\Spain\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
         elif country == "India":
             plt.plot(x_plot.values, val, color='g', label = lista2[pos],linewidth= 2)
             plt.axvline(pd.to_datetime('2020-03-24'), color="#9433FF", linestyle='--', lw=2, label='FIRST: Start /End alarm state')
             plt.axvline(pd.to_datetime('2020-05-31'), color="#9433FF", linestyle='--', lw=2)
             plt.axvspan(pd.to_datetime('2020-03-24'), pd.to_datetime('2020-05-31'), alpha=0.04, color='#9433FF')
-            plt.savefig(root_path + "\\resources\\India\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
+            plt.savefig(root_path + "\\reports\\India\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
         elif country == "Peru":
             plt.plot(x_plot.values, val, color='b', label = lista2[pos],linewidth= 2)
             plt.axvline(pd.to_datetime('2020-03-15'), color="#9433FF", linestyle='--', lw=2, label='FIRST: Start alarm state')
-            plt.savefig(root_path + "\\resources\\Peru\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
+            plt.savefig(root_path + "\\reports\\Peru\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
         elif country == "United States":
             plt.plot(x_plot.values, val, color='#6B737E', label = lista2[pos],linewidth= 2)
             plt.axvline(pd.to_datetime('2020-03-15'), color="#9433FF", linestyle='--', lw=2, label='FIRST: Start Alarm State')
-            plt.savefig(root_path + "\\resources\\United_States\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
+            plt.savefig(root_path + "\\reports\\United_States\\" + lista2[pos] + ".png", dpi=300, bbox_inches='tight')
             
         plt.legend()
         plt.show()
@@ -161,4 +162,4 @@ def label_fig(title=None, xlab=None, ylab=None, tit_size=15):
 
 def save_resources(name):
     root_project = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    plt.savefig(root_project + f'//resources//{name}.png', dpi=300, bbox_inches='tight')
+    plt.savefig(root_project + f'//reports//{name}.png', dpi=300, bbox_inches='tight')
