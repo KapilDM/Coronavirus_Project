@@ -139,3 +139,6 @@ def label_fig(title=None, xlab=None, ylab=None, tit_size=15):
     if ylab:
         plt.ylabel(ylab, weight="bold")
 
+def save_resources(name):
+    root_project = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    plt.savefig(root_project + f'//resources//{name}.png', dpi=300, bbox_inches='tight')
